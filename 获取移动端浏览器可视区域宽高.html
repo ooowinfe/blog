@@ -1,0 +1,23 @@
+    // 自动设置移动端宽度，返回的数据不带单位，如iphone6，deviceW=375
+    var deviceW, deviceH;
+    function getPageSize() {
+        if (self.innerHeight) { // all except Explorer
+            if (document.documentElement.clientWidth) {
+                deviceW = document.documentElement.clientWidth;
+            } else {
+                deviceW = self.innerWidth;
+            }
+            deviceH = self.innerHeight;
+        } else {
+            if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode
+                deviceW = document.documentElement.clientWidth;
+                deviceH = document.documentElement.clientHeight;
+            } else {
+                if (document.body) { // other Explorers
+                    deviceW = document.body.clientWidth;
+                    deviceH = document.body.clientHeight;
+                }
+            }
+        }
+    }
+    getPageSize();
