@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+ 
+        .box {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+        }
+ 
+        /*四边*/
+        .box .t,
+        .box .b,
+        .box .l,
+        .box .r {
+            position: absolute;
+            z-index: 1;
+            background:#666;
+        }
+ 
+        .box .l,
+        .box .r {
+            width: 10px;
+            height: 100%;
+            cursor: col-resize;
+        }
+ 
+        .box .t,
+        .box .b {
+            width: 100%;
+            height: 10px;
+            cursor: row-resize;
+        }
+ 
+        .box .t {
+            top: 0;
+        }
+ 
+        .box .b {
+            bottom: 0;
+        }
+ 
+        .box .l {
+            left: 0;
+        }
+ 
+        .box .r {
+            right: 0;
+        }
+ 
+        /*四角*/
+        .box .tl,
+        .box .bl,
+        .box .br,
+        .box .tr {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            background: #CCC;
+            z-index: 2;
+            cursor: nwse-resize
+        }
+ 
+        .box .tl,
+        .box .bl {
+            left: -5px;
+        }
+ 
+        .box .tr,
+        .box .br {
+            right: -5px;
+        }
+ 
+        .box .br,
+        .box .bl {
+            bottom: -5px;
+        }
+ 
+        .box .tl,
+        .box .tr {
+            top: -5px;
+        }
+ 
+        .box .tr,
+        .box .bl {
+            cursor: nesw-resize;
+        }
+ 
+        /*图片*/
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script>
+ 
+        window.onload = function () {
+            var oDiv = document.getElementsByTagName('div')[0];
+            oDiv.style.width = '500px';
+            var aSpan = oDiv.getElementsByTagName('span');
+            for (var i = 0; i < aSpan.length; i++) {
+                dragFn(aSpan[i]);
+            }
+ 
+            function dragFn(obj) {
+                obj.onmousedown = function (ev) {
+                    var oEv = ev || event;
+ 
+                    var oldWidth = oDiv.offsetWidth;
+                    var oldHeight = oDiv.offsetHeight;
+                    var oldX = oEv.clientX;
+                    var oldY = oEv.clientY;
+                    var oldLeft = oDiv.offsetLeft;
+                    var oldTop = oDiv.offsetTop;
+ 
+                    document.onmousemove = function (ev) {
+                        var oEv = ev || event;
+ 
+                        if (obj.className == 'tl') {
+                            oDiv.style.width = oldWidth - (oEv.clientX - oldX) + 'px';
+                            oDiv.style.height=oldHeight-(oEv.clientY-oldY)+'px';
+                            oDiv.style.left = oldLeft + (oEv.clientX - oldX) + 'px';
+                            oDiv.style.top = oldTop + (oEv.clientY - oldY) + 'px';
+                        }
+                        else if (obj.className == 'bl') {
+                            oDiv.style.width = oldWidth - (oEv.clientX - oldX) + 'px';
+                            oDiv.style.height=oldHeight+(oEv.clientY-oldY)+'px';
+                            oDiv.style.left = oldLeft + (oEv.clientX - oldX) + 'px';
+                            oDiv.style.bottom = oldTop + (oEv.clientY + oldY) + 'px';
+                        }
+                        else if (obj.className == 'tr') {
+                            oDiv.style.width = oldWidth + (oEv.clientX - oldX) + 'px';
+                            oDiv.style.height = oldHeight - (oEv.clientY - oldY)+'px';
+                            oDiv.style.right = oldLeft - (oEv.clientX - oldX) + 'px';
+                            oDiv.style.top = oldTop + (oEv.clientY - oldY) + 'px';
+                        }
+                        else if (obj.className == 'br') {
+                            oDiv.style.width = oldWidth + (oEv.clientX - oldX) + 'px';
+                            oDiv.style.height = oldHeight + (oEv.clientY - oldY)+'px';
+                            oDiv.style.right = oldLeft - (oEv.clientX - oldX) + 'px';
+                            oDiv.style.bottom = oldTop + (oEv.clientY + oldY) + 'px';
+                        }
+                        else if (obj.className == 't') {
+                            oDiv.style.height=oldHeight-(oEv.clientY-oldY)+'px';
+                            oDiv.style.top = oldTop + (oEv.clientY - oldY) + 'px';
+                        }
+                        else if (obj.className == 'b') {
+                            oDiv.style.height = oldHeight + (oEv.clientY - oldY)+'px';
+                            oDiv.style.bottom = oldTop - (oEv.clientY + oldY) + 'px';
+                        }
+                        else if (obj.className == 'l') {
+                            oDiv.style.height = oldHeight + 'px';
+                            oDiv.style.width = oldWidth - (oEv.clientX - oldX) + 'px';
+                            oDiv.style.left = oldLeft + (oEv.clientX - oldX) + 'px';
+                        }
+                        else if (obj.className == 'r') {
+                            oDiv.style.height = oldHeight + 'px';
+                            oDiv.style.width = oldWidth + (oEv.clientX - oldX) + 'px';
+                            oDiv.style.right = oldLeft - (oEv.clientX - oldX) + 'px';
+                        }
+                    };
+ 
+                    document.onmouseup = function () {
+                        document.onmousemove = null;
+                    };
+                    return false;
+                };
+            }
+ 
+        };
+    </script>
+</head>
+ 
+<body>
+<div class="box">
+    <span class="r"></span>
+    <span class="l"></span>
+    <span class="t"></span>
+    <span class="b"></span>
+    <span class="br"></span>
+    <span class="bl"></span>
+    <span class="tr"></span>
+    <span class="tl"></span>
+    <img src="https://gss0.bdstatic.com/70cFsjip0QIZ8tyhnq/img/iknow/730-350-0.jpg">
+</div>
+</body>
+</html>
