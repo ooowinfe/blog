@@ -7,7 +7,10 @@ npm install -g omi-cli
 
 刚开始已经是npm 安装的问题，尝试cnpm，yarn 后还是报错。
 
-百度很久，解决方案如下：
+
+百度很久，原来是因为\r这个字符的缘故。在linux终端下，输出\r会什么都不显示，只是把光标移到行首。
+
+解决方案如下：
 ```
 $brew install dos2unix
 $cd /usr/local/lib/node_modules/omi/bin
